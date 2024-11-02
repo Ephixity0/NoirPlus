@@ -12,7 +12,6 @@ import WatchDetails from "@/components/WatchDetails";
 const Watch = () => {
   const params = useSearchParams();
   const { back, push } = useRouter();
-  // console.log(params.get("id"));
   const [type, setType] = useState<string | null>("");
   const [id, setId] = useState<any>();
   const [season, setSeason] = useState<any>();
@@ -28,6 +27,7 @@ const Watch = () => {
   const nextBtn: any = useRef(null);
   const backBtn: any = useRef(null);
   const moreBtn: any = useRef(null);
+
   if (type === null && params.get("id") !== null) setType(params.get("type"));
   if (id === null && params.get("id") !== null) setId(params.get("id"));
   if (season === null && params.get("season") !== null)
@@ -42,6 +42,7 @@ const Watch = () => {
     setSeason(params.get("season"));
     setEpisode(params.get("episode"));
     setContinueWatching({ type: params.get("type"), id: params.get("id") });
+
     const fetch = async () => {
       const res: any = await axiosFetch({ requestID: `${type}Data`, id: id });
       setdata(res);
@@ -54,7 +55,7 @@ const Watch = () => {
       seasonData?.episodes?.length > 0 &&
         setMaxEpisodes(
           seasonData?.episodes[seasonData?.episodes?.length - 1]
-            ?.episode_number,
+            ?.episode_number
         );
       setMinEpisodes(seasonData?.episodes[0]?.episode_number);
       if (parseInt(episode) >= maxEpisodes - 1) {
@@ -73,27 +74,22 @@ const Watch = () => {
       if (event.shiftKey && event.key === "N") {
         event.preventDefault();
         nextBtn?.current.click();
-        // handleForward();
-        // console.log("next");
       } else if (event.shiftKey && event.key === "P") {
         event.preventDefault();
         backBtn?.current.click();
-        // handleBackward();
-        // console.log("prev");
       } else if (event.shiftKey && event.key === "M") {
         event.preventDefault();
         moreBtn?.current.click();
       }
     };
 
-    // Add event listener when component mounts
     window.addEventListener("keydown", handleKeyDown);
 
-    // Remove event listener when component unmounts
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [params, id, season, episode]);
+
   useEffect(() => {
     toast.info(
       <div>
@@ -131,34 +127,15 @@ const Watch = () => {
         </a>
       </div>,
     );
-    // window.addEventListener("keydown", (event) => {
-    //   console.log("Key pressed:", event.key);
-    // });
   }, []);
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log({ id });
-  //     setLoading(false);
-  //   }, 1000);
-  // }, [id]);
-
-  // useEffect(() => {
-  //   // Override window.open to prevent opening new tabs
-  //   window.open = function (url, target, features, replace) {
-  //     console.log("window.open is blocked:", url);
-  //     return null; // Return null to prevent opening new tabs
-  //   };
-  // }, [window]);
 
   function handleBackward() {
-    // setEpisode(parseInt(episode)+1);
     if (episode > minEpisodes)
       push(
         `/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) - 1}`,
       );
   }
   function handleForward() {
-    // setEpisode(parseInt(episode)+1);
     if (episode < maxEpisodes)
       push(
         `/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) + 1}`,
@@ -178,6 +155,13 @@ const Watch = () => {
 
   return (
     <div className={styles.watch}>
+      <div className={styles.logo}>
+        <img
+          src="public/images/63d168593f214df1ae64b04babe19c89-free.png"
+          alt="Noir+ Logo"
+        />
+        <h1>Noir+</h1>
+      </div>
       <div onClick={() => back()} className={styles.backBtn}>
         <IoReturnDownBack
           data-tooltip-id="tooltip"
@@ -270,7 +254,7 @@ const Watch = () => {
       </select>
       <div className={`${styles.loader} skeleton`}></div>
 
-      {source === "AGG" && id !== "" && id !== null ? (
+      { source === "AGG" && id !== "" && id !== null ? (
         <iframe
           scrolling="no"
           src={
