@@ -8,7 +8,7 @@ Your Personal Streaming Oasis
 </div>
 
 <p align="center">
-  <img align="center" src="https://readme-typing-svg.herokuapp.com?color=%23${textVal}&lines=+👋🏻+Welcome+to+Noir+👋🏻;🌐+Stream+Movies+and+Tv+Shows+🌐;👨🏻‍💻+Lets+Build+Together+👩🏻‍💻;💡+Download+Our+App!+💡;🌐+Check+our+website+🌐;🙏🏻+Thanks+for+Contributing+🙏🏻"
+   <img align="center" src="https://readme-typing-svg.herokuapp.com?color=%23${textVal}&lines=+👋🏻+Welcome+to+Noir+👋🏻;🌐+Stream+Movies+and+Tv+Shows+🌐;👨🏻‍💻+Lets+Build+Together+👩🏻‍💻;💡+Download+Our+App!+💡;🌐+Check+our+website+🌐;🙏🏻+Thanks+for+Contributing+🙏🏻"
  <img src= 'https://capsule-render.vercel.app/api?type=rect&color=gradient&height=2.5'/>
 </p>
 
