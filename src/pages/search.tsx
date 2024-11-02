@@ -121,13 +121,16 @@ const SearchPage = ({ categoryType }: SearchPageProps) => {
     }
   }, [loading]);
 
-  useEffect(() => {
+    useEffect(() => {
     setCurrentPage(1);
   }, [query]);
 
   return (
     <div className={styles.MoviePage}>
-      <img src="/images/63d168593f214df1ae64b04babe19c89-free.png" alt="Noir+ Logo" className ={styles.logoImage} />
+      <div className={styles.logo}>
+        <img src="/images/63d168593f214df1ae64b04babe19c89-free.png" alt="Noir+ Logo" className={styles.logoImage} />
+        <h1 className={styles.logoText}>Noir+</h1>
+      </div>
       <div className={styles.InputWrapper}>
         <input
           ref={searchBar}
@@ -159,6 +162,7 @@ const SearchPage = ({ categoryType }: SearchPageProps) => {
       <div className={styles.movieList}>
         {genreListMovie.length > 0 && genreListTv.length > 0 && data.map((ele) => (
           <MovieCardLarge
+            key={ele.id} // Ensure to add a unique key for each element
             data={ele}
             media_type={categoryType}
             genresMovie={genreListMovie}
@@ -169,11 +173,12 @@ const SearchPage = ({ categoryType }: SearchPageProps) => {
           <h1>No Data Found</h1>
         ) : null}
         {query.length > 2 && data === undefined ? (
-          dummyList.map((ele) => <Skeleton className={styles.loading} />)
+          dummyList.map((ele) => <Skeleton key={ele} className={styles.loading} />)
         ) : null}
         {genreListMovie.length === 0 || genreListTv.length === 0 ? (
           dummyList.map((ele) => (
             <MovieCardLarge
+              key={ele} // Ensure to add a unique key for each element
               data={ele}
               media_type={categoryType}
               genresMovie={genreListMovie}
@@ -188,7 +193,6 @@ const SearchPage = ({ categoryType }: SearchPageProps) => {
         activeClassName={styles.paginateActive}
         onPageChange={(event) => {
           setCurrentPage(event.selected + 1);
-          console.log({ event });
           if (currentPage > totalPages) {
             setCurrentPage(totalPages);
           }
