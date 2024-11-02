@@ -1,32 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "@/styles/Settings.module.scss";
 import Link from "next/link";
-import { loginUserGoogle, loginUserManual } from "@/Utils/firebaseUser";
+import { loginUser Google, loginUser Manual } from "@/Utils/firebaseUser ";
 import { useRouter } from "next/navigation";
+
 const LoginPage = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const { push } = useRouter();
-  const handleFormSubmission = async (e: any) => {
+
+  const handleFormSubmission = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (await loginUserManual({ email, password })) {
+    if (await loginUser Manual({ email, password })) {
       push("/settings");
     }
   };
-  const handleGoogleSignIn = async (e: any) => {
+
+  const handleGoogleSignIn = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (await loginUserGoogle()) {
+    if (await loginUser Google()) {
       push("/settings");
     }
   };
+
   return (
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img
-          src="/images/logo.svg"
-          alt="logo"
+          src="/images/63d168593f214df1ae64b04babe19c89-free.png"
+          alt="Noir+ Logo"
           data-tooltip-id="tooltip"
-          data-tooltip-content="Rive"
+          data-tooltip-content="Noir+"
         />
         <p>Your Personal Streaming Oasis</p>
       </div>
@@ -39,7 +43,7 @@ const LoginPage = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(e: any) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <label htmlFor="password">Password</label>
@@ -47,17 +51,17 @@ const LoginPage = () => {
               type="password"
               id="password"
               value={password}
-              onChange={(e: any) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <button onClick={handleFormSubmission}>submit</button>
+            <button onClick={handleFormSubmission}>Submit</button>
           </>
         </div>
         <h4 className={styles.signin} onClick={handleGoogleSignIn}>
-          SignIn with <span className={styles.highlight}>Google</span>
+          Sign in with <span className={styles.highlight}>Google</span>
         </h4>
         <h4>
-          Become Rive member!{" "}
+          Become a Noir+ member!{" "}
           <Link href="/signup" className={styles.highlight}>
             Signup
           </Link>
