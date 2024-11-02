@@ -4,15 +4,15 @@ import styles from "@/styles/Settings.module.scss";
 const choices = ["Rock", "Paper", "Scissors"];
 
 const OfflinePage = () => {
-  const [userChoice, setUser Choice] = useState(null);
+  const [userChoice, setUserChoice] = useState(null);  // Removed space
   const [computerChoice, setComputerChoice] = useState(null);
   const [result, setResult] = useState("");
-  const [userScore, setUser Score] = useState(0);
+  const [userScore, setUserScore] = useState(0);  // Removed space
   const [computerScore, setComputerScore] = useState(0);
 
   const playGame = (userSelection) => {
     const computerSelection = choices[Math.floor(Math.random() * choices.length)];
-    setUser Choice(userSelection);
+    setUserChoice(userSelection);  // Fixed function name
     setComputerChoice(computerSelection);
     determineWinner(userSelection, computerSelection);
   };
@@ -26,7 +26,7 @@ const OfflinePage = () => {
       (userSelection === "Scissors" && computerSelection === "Paper")
     ) {
       setResult("You win!");
-      setUser Score(userScore + 1);
+      setUserScore(userScore + 1);  // Fixed function name
     } else {
       setResult("Computer wins!");
       setComputerScore(computerScore + 1);
@@ -34,7 +34,7 @@ const OfflinePage = () => {
   };
 
   const resetGame = () => {
-    setUser Choice(null);
+    setUserChoice(null);  // Fixed function name
     setComputerChoice(null);
     setResult("");
   };
