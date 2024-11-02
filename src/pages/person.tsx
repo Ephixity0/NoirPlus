@@ -4,7 +4,6 @@ import styles from "@/styles/Detail.module.scss";
 import MetaDetails from "@/components/MetaDetails";
 import Carousel from "@/components/Carousel";
 import axiosFetch from "@/Utils/fetchBackend";
-import MoviePoster from "@/components/MoviePoster";
 import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
 import { BsShare } from "react-icons/bs";
@@ -26,15 +25,10 @@ const PersonPage = () => {
       try {
         const data = await axiosFetch({ requestID: `${type}Data`, id: id });
         setData(data);
-        const res = await axiosFetch({ requestID: `${type}Data`, id: id });
-        setData(res);
-        console.log({ res });
-
         const response = await axiosFetch({
           requestID: `${type}Images`,
           id: id,
         });
-        // setImages(response.results);
         let arr: any = [];
         response.profiles.map((ele: any, i: any) => {
           if (i < 10)
@@ -43,7 +37,7 @@ const PersonPage = () => {
         if (arr.length === 0) arr.push("/images/logo.svg");
         setImages(arr);
       } catch (error) {
-        // console.error("Error fetching data:", error);
+        console.error("Error fetching data:", error);
       }
     };
     if (id !== undefined && id !== null) {
@@ -57,9 +51,13 @@ const PersonPage = () => {
   };
 
   return (
-    // carousel
-    // detail
     <div className={`${styles.DetailPage} ${styles.PersonPage}`}>
+      {/* Logo Section */}
+      <div className={styles.logo}>
+        <img src="/images/63d168593f214df1ae64b04babe19c89-free.png" alt="Noir+ Logo" className={styles.logoImage} />
+        <h1 className={styles.logoText}>Noir+</h1>
+      </div>
+
       <div className={`${styles.biggerPic} ${styles.detailBiggerPic}`}>
         {images.length > 0 ? (
           <Carousel
