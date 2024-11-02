@@ -35,7 +35,7 @@ const DetailPage = () => {
   const [bookmarked, setBookmarked] = useState(false);
   const [trailer, setTrailer] = useState<any>("");
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>();
+  const [user, setUser ] = useState<any>();
 
   useEffect(() => {
     setLoading(true);
@@ -57,27 +57,17 @@ const DetailPage = () => {
           requestID: `${type}Images`,
           id: id,
         });
-        // setImages(response.results);
         let arr: any = [];
         response.backdrops.map((ele: any, i: number) => {
           if (i < 20)
             arr.push(process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele.file_path);
         });
-        // if (arr.length === 0) {
-        //   response.posters.map((ele: any, i) => {
-        //     if (i < 10) arr.push(process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele.file_path);
-        //   });
-        // }
         if (arr.length === 0) arr.push("/images/logo.svg");
         setImages(arr);
         setLoading(false);
       } catch (error) {
-        // console.error("Error fetching data:", error);
+        // Handle error
       }
-      // finally {
-      //   const data = await axiosFetch({ requestID: `${type}Data`, id: id });
-      //   setData(data);
-      // }
     };
     fetchData();
   }, [params, id]);
@@ -86,8 +76,7 @@ const DetailPage = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userID = user.uid;
-        setUser(userID);
-        // setIds(await getBookmarks(userID)?.movie)
+        setUser (userID);
         setLoading(false);
       } else {
         setLoading(true);
@@ -106,7 +95,6 @@ const DetailPage = () => {
           setBookmarked(
             await checkBookmarks({ userId: null, type: type, id: data.id }),
           );
-        // console.log(checkBookmarks({ userId: user, type: type, id: data.id }));
       }
     };
     fetch();
@@ -126,9 +114,7 @@ const DetailPage = () => {
   };
 
   return (
-    // carousel
-    // detail
-    <div className={styles.DetailPage}>
+        <div className={styles.DetailPage}>
       <div className={styles.biggerPic}>
         {
           images?.length > 0 ? (
@@ -141,7 +127,7 @@ const DetailPage = () => {
             />
           ) : (
             <Skeleton className={styles.CarouselLoading} />
-          ) // if no images array, then use backdrop poster
+          )
         }
         <div className={styles.curvy}></div>
         <div className={styles.curvy2}></div>
@@ -167,7 +153,7 @@ const DetailPage = () => {
             </h1>
             <div className={styles.HomeHeroMetaRow2}>
               <p className={styles.type}>
-                {data ? (type == "movie" ? "MOVIE" : "SHOW") : null}
+                {data ? (type === "movie" ? "MOVIE" : "SHOW") : null}
               </p>
               {data ? (
                 <>
@@ -223,6 +209,14 @@ const DetailPage = () => {
       </div>
       <div className={styles.biggerDetail}>
         <MetaDetails id={id} type={type} data={data} />
+      </div>
+      <div className={styles.logoContainer}>
+        <img
+          src="/images/63d168593f214df1ae64b04babe19c89-free.png"
+          alt="Noir+ Logo"
+          className={styles.logo}
+        />
+        <h2>Noir+</h2>
       </div>
     </div>
   );
