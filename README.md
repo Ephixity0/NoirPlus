@@ -1,7 +1,8 @@
 <div align="center">
 <p>
 
-<image src="./public/images/logo.svg" height="300"/>
+[63d168593f214df1ae64b04babe19c89-free](https://github.com/user-attachments/assets/67c7e2ef-11c3-4277-b1dd-2f1985e07f65)
+
 </p>
 Your Personal Streaming Oasis
 </div>
