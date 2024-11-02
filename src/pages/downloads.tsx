@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "@/styles/Settings.module.scss";
-import Link from "next/link";
-import { loginUser Google, loginUser Manual } from "@/Utils/firebaseUser ";
-import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const { push } = useRouter();
+  const [deferredPrompt, setDeferredPrompt] = useState<any>();
 
-  const handleFormSubmission = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (await loginUser Manual({ email, password })) {
-      push("/settings");
-    }
-  };
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
 
-  const handleGoogleSignIn = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (await loginUser Google()) {
-      push("/settings");
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleDownload = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") {
+        setDeferredPrompt(null);
+      }
     }
   };
 
@@ -35,38 +40,27 @@ const LoginPage = () => {
         <p>Your Personal Streaming Oasis</p>
       </div>
       <div className={styles.settings}>
-        <h1>Login</h1>
+        <h1>Downloads</h1>
         <div className={styles.group2}>
-          <>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button onClick={handleFormSubmission}>Submit</button>
-          </>
+          <h1>PWA</h1>
+          <p>
+            This will install the app for all devices with very low space and data.
+          </p>
+          <p>
+            Download using Brave Browser or Chrome if you have an ad-blocker on the
+            Chrome account, for an ad-free experience.
+          </p>
+          <p>If not downloading, refresh this page and try again.</p>
+          {/* <p>To download movies/tv shows, go to its watch page, and use extensions like FetchV.</p> */}
+          <h4
+            className={styles.downloadButton}
+            onClick={handleDownload}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Download PWA"
+          >
+            Download
+          </h4>
         </div>
-        <h4 className={styles.signin} onClick={handleGoogleSignIn}>
-          Sign in with <span className={styles.highlight}>Google</span>
-        </h4>
-        <h4>
-          Become a Noir+ member!{" "}
-          <Link href="/signup" className={styles.highlight}>
-            Signup
-          </Link>
-        </h4>
-        {/* <h4 onClick={() => resetPassword(email)} className={styles.highlight}>Forgot Password?</h4> */}
       </div>
     </div>
   );
