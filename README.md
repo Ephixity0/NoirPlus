@@ -1,6 +1,3 @@
-<!-- ![proxy-manager](https://socialify.git.ci/Developabile/rive-next/image?description=1&font=KoHo&forks=1&issues=1&language=1&owner=1&pulls=1&stargazers=1&theme=Auto)
- -->
-
 <div align="center">
 <p>
 
@@ -10,23 +7,23 @@ Your Personal Streaming Oasis
 </div>
 
 <p align="center">
-  <img align="center" src="https://readme-typing-svg.herokuapp.com?color=%23${textVal}&lines=+👋🏻+Welcome+to+Rive+👋🏻;🌐+Stream+Movies+and+Tv+Shows+🌐;👨🏻‍💻+Lets+Build+Together+👩🏻‍💻;💡+Download+Our+App!+💡;🌐+Check+our+website+🌐;🙏🏻+Thanks+for+Contributing+🙏🏻"
+  <img align="center" src="https://readme-typing-svg.herokuapp.com?color=%23${textVal}&lines=+👋🏻+Welcome+to+Noir+👋🏻;🌐+Stream+Movies+and+Tv+Shows+🌐;👨🏻‍💻+Lets+Build+Together+👩🏻‍💻;💡+Download+Our+App!+💡;🌐+Check+our+website+🌐;🙏🏻+Thanks+for+Contributing+🙏🏻"
  <img src= 'https://capsule-render.vercel.app/api?type=rect&color=gradient&height=2.5'/>
 </p>
 
-# **_Rive_**
+# **_Noir+_**
 
-Rive is a cutting-edge platform for streaming movies and TV shows online. Our project utilizes Next.js. Your Personal Streaming Oasis
+Noir+ is a cutting-edge platform for streaming movies and TV shows online. Our project utilizes Next.js. Your Personal Streaming Oasis
 
 <div align="left">
  <p>
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Developabile/rive-next)
-![Github LOC](https://tokei.rs/b1/github/Developabile/rive-next)
-![Github Files](https://tokei.rs/b1/github/Developabile/rive-next?category=files)
+![GitHub repo size](https://img.shields.io/github/repo-size/Developabile/noir-plus)
+![Github LOC](https://tokei.rs/b1/github/Developabile/noir-plus)
+![Github Files](https://tokei.rs/b1/github/Developabile/noir-plus?category=files)
 
-[![CodeQL](https://github.com/Developabile/rive-next/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Developabile/rive-next/actions/workflows/github-code-scanning/codeql)
-[![Weekly Update TMDB Collections](https://github.com/Developabile/rive-next/actions/workflows/weekly_update.yml/badge.svg)](https://github.com/Developabile/rive-next/actions/workflows/weekly_update.yml)
+[![CodeQL](https://github.com/Developabile/noir-plus/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Developabile/noir-plus/actions/workflows/github-code-scanning/codeql)
+[![Weekly Update TMDB Collections](https://github.com/Developabile/noir-plus/actions/workflows/weekly_update.yml/badge.svg)](https://github.com/Developabile/noir-plus/actions/workflows/weekly_update.yml)
 
  </p>
 </div>
@@ -85,7 +82,7 @@ Rive is a cutting-edge platform for streaming movies and TV shows online. Our pr
 > - Select **South Korea** from Country
 > - Click Submit
 
-## **Tech Stack**
+## **Tech Stack **
 
 <p>
     <img src="https://img.shields.io/badge/next.js-7c3aed?style=for-the-badge&logo=next.js&logoColor=white" alt="Javascript official Website"/>
@@ -112,7 +109,7 @@ Here are some screenshots on various devices
 <details>
 <summary><b>Click here for more details</b></summary>
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Developabile/rive-next&type=Date)](https://star-history.com/#Developabile/rive-next&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Developabile/noir-plus&type=Date)](https://star-history.com/#Developabile/noir-plus&Date)
 
 </details>
 
@@ -120,6 +117,6 @@ Here are some screenshots on various devices
 
 > [!IMPORTANT]
 >
-> Rive-Next does not host any files, it merely links to 3rd party services.  
+> Noir+ does not host any files, it merely links to 3rd party services.  
 > Legal issues should be taken up with the file hosts and providers.  
-> Rive-Next is not responsible for any media files shown by the video providers.
+> Noir+ is not responsible for any media files shown by the video providers.
