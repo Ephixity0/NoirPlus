@@ -1,32 +1,34 @@
 <div align="center">
-<p>
-
-<img src="public/images/63d168593f214df1ae64b04babe19c89-free.png" alt="Noir+ Logo"/>
-
-</p>
-Your Personal Streaming Oasis
+  <p>
+    <img src="public/images/63d168593f214df1ae64b04babe19c89-free.png" alt="Noir+ Logo" />
+  </p>
+  <p>Your Personal Streaming Oasis</p>
 </div>
 
+<div align="center">
+  <img 
+    align="center" 
+    src="https://readme-typing-svg.herokuapp.com?color=%23${textVal}&lines=+👋🏻+Welcome+to+Noir+👋🏻;🌐+Stream+Movies+and+Tv+Shows+🌐;👨🏻‍💻+Lets+Build+Together+👩🏻‍💻;💡+Download+Our+App!+💡;🌐+Check+our+website+🌐;🙏🏻+Thanks+for+Contributing+🙏🏻" 
+    alt="Typing Effect"
+  />
+  <img src='https://capsule-render.vercel.app/api?type=rect&color=gradient&height=2.5' alt="Divider" />
+</div>
+
+<h1 align="center">**_Noir+_**</h1>
+
 <p align="center">
-   <img align="center" src="https://readme-typing-svg.herokuapp.com?color=%23${textVal}&lines=+👋🏻+Welcome+to+Noir+👋🏻;🌐+Stream+Movies+and+Tv+Shows+🌐;👨🏻‍💻+Lets+Build+Together+👩🏻‍💻;💡+Download+Our+App!+💡;🌐+Check+our+website+🌐;🙏🏻+Thanks+for+Contributing+🙏🏻"
- <img src= 'https://capsule-render.vercel.app/api?type=rect&color=gradient&height=2.5'/>
+  Noir+ is a cutting-edge platform for streaming movies and TV shows online. Our project utilizes Next.js. Your Personal Streaming Oasis
 </p>
 
-# **_Noir+_**
-
-Noir+ is a cutting-edge platform for streaming movies and TV shows online. Our project utilizes Next.js. Your Personal Streaming Oasis
-
 <div align="left">
- <p>
+  <p>
+    ![GitHub repo size](https://img.shields.io/github/repo-size/Developabile/noir-plus)
+    ![Github LOC](https://tokei.rs/b1/github/Developabile/noir-plus)
+    ![Github Files](https://tokei.rs/b1/github/Developabile/noir-plus?category=files)
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Developabile/noir-plus)
-![Github LOC](https://tokei.rs/b1/github/Developabile/noir-plus)
-![Github Files](https://tokei.rs/b1/github/Developabile/noir-plus?category=files)
-
-[![CodeQL](https://github.com/Developabile/noir-plus/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Developabile/noir-plus/actions/workflows/github-code-scanning/codeql)
-[![Weekly Update TMDB Collections](https://github.com/Developabile/noir-plus/actions/workflows/weekly_update.yml/badge.svg)](https://github.com/Developabile/noir-plus/actions/workflows/weekly_update.yml)
-
- </p>
+    [![CodeQL](https://github.com/Developabile/noir-plus/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Developabile/noir-plus/actions/workflows/github-code-scanning/codeql)
+    [![Weekly Update TMDB Collections](https://github.com/Developabile/noir-plus/actions/workflows/weekly_update.yml/badge.svg)](https://github.com/Developabile/noir-plus/actions/workflows/weekly_update.yml)
+  </p>
 </div>
 
 ## **Features**:
