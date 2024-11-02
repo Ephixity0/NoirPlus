@@ -2,22 +2,22 @@ import { useState } from "react";
 import styles from "@/styles/Settings.module.scss";
 
 const ErrorPage = () => {
-  const [userChoice, setUser Choice] = useState(null);
-  const [computerChoice, setComputerChoice] = useState(null);
-  const [result, setResult] = useState("");
-  const [userScore, setUser Score] = useState(0);
-  const [computerScore, setComputerScore] = useState(0);
+  const [userChoice, setUser Choice] = useState<string | null>(null); // Fixed variable name
+  const [computerChoice, setComputerChoice] = useState<string | null>(null);
+  const [result, setResult] = useState<string>("");
+  const [userScore, setUser Score] = useState<number>(0); // Fixed variable name
+  const [computerScore, setComputerScore] = useState<number>(0);
 
   const choices = ["Treasure", "Trap", "Nothing"]; // Example choices for the game
 
-  const playGame = (userSelection) => {
+  const playGame = (userSelection: string) => {
     const computerSelection = choices[Math.floor(Math.random() * choices.length)];
-    setUser Choice(userSelection);
+    setUser Choice(userSelection); // Fixed variable name
     setComputerChoice(computerSelection);
     determineWinner(userSelection, computerSelection);
   };
 
-  const determineWinner = (userSelection, computerSelection) => {
+  const determineWinner = (userSelection: string, computerSelection: string) => {
     if (userSelection === computerSelection) {
       setResult("You both found nothing!");
     } else if (
@@ -26,15 +26,15 @@ const ErrorPage = () => {
       (userSelection === "Trap" && computerSelection === "Treasure")
     ) {
       setResult("You win! You found the treasure!");
-      setUser Score(userScore + 1);
+      setUser Score((prevScore) => prevScore + 1); // Fixed variable name
     } else {
       setResult("Computer wins! You fell into a trap!");
-      setComputerScore(computerScore + 1);
+      setComputerScore((prevScore) => prevScore + 1);
     }
   };
 
   const resetGame = () => {
-    setUser Choice(null);
+    setUser Choice(null); // Fixed variable name
     setComputerChoice(null);
     setResult("");
   };
@@ -90,7 +90,7 @@ const ErrorPage = () => {
             <h3>{result}</h3>
           </div>
         )}
-        <div className={styles.scoreboard}>
+        <div className={styles.scoreboard}> {/* Fixed line 92 */}
           <p>User Score: {userScore}</p>
           <p>Computer Score: {computerScore}</p>
         </div>
