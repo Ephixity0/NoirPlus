@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "@/styles/Settings.module.scss";
 import Link from "next/link";
-import { loginUser Google, loginUser Manual } from "@/Utils/firebaseUser ";
+import { loginUserGoogle, loginUserManual } from "@/Utils/firebaseUser"; // Fixed import
 import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
@@ -11,14 +11,14 @@ const LoginPage = () => {
 
   const handleFormSubmission = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (await loginUser Manual({ email, password })) {
+    if (await loginUserManual({ email, password })) {
       push("/settings");
     }
   };
 
   const handleGoogleSignIn = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (await loginUser Google()) {
+    if (await loginUserGoogle()) {
       push("/settings");
     }
   };
@@ -66,7 +66,6 @@ const LoginPage = () => {
             Signup
           </Link>
         </h4>
-        {/* <h4 onClick={() => resetPassword(email)} className={styles.highlight}>Forgot Password?</h4> */}
       </div>
     </div>
   );
