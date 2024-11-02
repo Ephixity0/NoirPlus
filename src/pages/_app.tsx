@@ -14,9 +14,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 export default function App({ Component, pageProps }: any) {
   const [isLoading, setIsLoading] = useState(false);
   NProgress.configure({ showSpinner: false });
-  // NProgress.configure({
-  //   template: '<div class="bar" role="bar"><div class="peg"></div></div>'
-  // });
+
   useEffect(() => {
     Router.events.on("routeChangeStart", (url) => {
       setIsLoading(true);
@@ -32,14 +30,15 @@ export default function App({ Component, pageProps }: any) {
       setIsLoading(false);
     });
   }, [Router]);
+
   return (
     <>
       <Head>
-        <title>Rive</title>
+        <title>Noir+</title>
         <meta name="description" content="Your Personal Streaming Oasis" />
         <meta
           name="keywords"
-          content="movie, streaming, tv, rive, stream. movie app, tv shows, movie download"
+          content="movie, streaming, tv, noir+, stream, movie app, tv shows, movie download"
         />
         <meta
           name="google-site-verification"
@@ -50,16 +49,19 @@ export default function App({ Component, pageProps }: any) {
         <meta name="theme-color" content="#f4f7fe" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Rive" />
+        <meta name="apple-mobile-web-app-title" content="Noir+" />
         <link rel="icon" href="/images/logo512.png" />
         <link rel="apple-touch-icon" href="/images/logo512.png" />
-        {/* <link rel="mask-icon" href="/images/logo512.svg" color="#f4f7fe" /> */}
         <meta name="mobile-web-app-capable" content="yes" />
-        {/* <meta name="msapplication-TileColor" content="#f4f7fe" /> */}
+        <meta name="msapplication-tile-color" content="#f4f7fe" />
         <meta name="msapplication-tap-highlight" content="no" />
         <link rel="shortcut icon" href="/images/logo512.png" />
       </Head>
       <Layout>
+        {/* Logo Image */}
+        <div style={{ textAlign: 'center', margin: '20px 0' }}>
+          <img src="/images/63d168593f214df1ae64b04babe19c89-free.png" alt="Noir+ Logo" />
+        </div>
         <Toaster
           toastOptions={{
             className: "sooner-toast-desktop",
