@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import axiosFetch from "@/Utils/fetchBackend";
-// import styles from "@/components/CategorywisePage/style.module.scss";
 import styles from "@/styles/Search.module.scss";
 import MovieCardSmall from "@/components/MovieCardSmall";
 import ReactPaginate from "react-paginate"; // for pagination
@@ -8,9 +7,9 @@ import Skeleton from "react-loading-skeleton";
 import NProgress from "nprogress";
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 import CollectionIDs from "@/assets/collection_ids.json";
-// import MoviePoster from '@/components/MoviePoster';
 
 const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 const Collections = ({ categoryType }: any) => {
   const [ids, setids] = useState<any>([]);
   const [data, setData] = useState<any>([]);
@@ -23,6 +22,7 @@ const Collections = ({ categoryType }: any) => {
   const [searchQuery, setSearchQuery] = useState<any>(null);
   const [isSearchBarFocused, setIsSearchBarFocused] = useState(false);
   const searchBar: any = useRef(null);
+
   useEffect(() => {
     if (loading) {
       NProgress.start();
@@ -32,15 +32,12 @@ const Collections = ({ categoryType }: any) => {
   // focus the input on "/"
   useEffect(() => {
     const handleKeyDown = (event: any) => {
-      // console.log(event.key);
       if (event.key === "/") {
         event.preventDefault();
         searchBar?.current.focus();
-        // setSearchQuery((prev: any) => prev + "/");
       } else if (event.key === "Escape") {
         event.preventDefault();
         searchBar?.current.blur();
-        // setSearchQuery((prev: any) => prev + "/");
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -48,9 +45,9 @@ const Collections = ({ categoryType }: any) => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
   useEffect(() => {
     setLoading(true);
-    // setData([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const fetchData = async () => {
       let arr: any = [];
       try {
@@ -64,24 +61,21 @@ const Collections = ({ categoryType }: any) => {
             id: JSON.stringify(CollectionIDs[i]?.id),
           });
           if (data !== undefined) await arr.push(data);
-          console.log({ arr });
-          // setLoading(false);
         }
-        // if (ids.length === 0 || ids === null || ids === undefined)
-        //   setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
       }
       return arr;
     };
+
     if (searchQuery === null || searchQuery?.length <= 2)
       fetchData().then((res) => {
-        console.log({ res });
         setData(res);
         setLoading(false);
       });
   }, [ids, currentPage, searchQuery]);
+
   useEffect(() => {
     if (searchQuery === "" || searchQuery === null) {
       setCurrentPage(1);
@@ -90,11 +84,11 @@ const Collections = ({ categoryType }: any) => {
       setCurrentPage(1);
     }
   }, [searchQuery]);
+
   useEffect(() => {
     let debounceTimer: NodeJS.Timeout;
     const fetchData = async (mode: any) => {
       setLoading(true);
-      // setData([null, null, null, null, null, null, null, null, null, null]);
       try {
         let data;
         if (mode) {
@@ -103,7 +97,6 @@ const Collections = ({ categoryType }: any) => {
             page: currentPage,
             query: searchQuery,
           });
-          // console.log();
           if (data.page > data.total_pages) {
             setCurrentPage(data.total_pages);
           }
@@ -119,6 +112,7 @@ const Collections = ({ categoryType }: any) => {
         console.error("Error fetching data:", error);
       }
     };
+
     const debounceSearch = () => {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
@@ -127,13 +121,22 @@ const Collections = ({ categoryType }: any) => {
         }
       }, 600);
     };
+
     if (searchQuery?.length > 2) debounceSearch();
-    return () => clearTimeout(debounceTimer);
-  }, [searchQuery, currentPage]);
+    return () => clearTimeout(debounceTimer);  }, [searchQuery, currentPage]);
 
   return (
     <div className={styles.MoviePage}>
-      {/* <h1>Collections</h1> */}
+      {/* Logo Section */}
+      <div className={styles.logoContainer}>
+        <img 
+          src="/images/63d168593f214df1ae64b04babe19c89-free.png" 
+          alt="Noir+ Logo" 
+          className={styles.logo} 
+        />
+        <h1 className={styles.logoText}>Noir+</h1>
+      </div>
+
       <div className={styles.InputWrapper}>
         <input
           ref={searchBar}
@@ -144,8 +147,6 @@ const Collections = ({ categoryType }: any) => {
           placeholder="Please enter at least 3 characters to search collections...."
           onFocus={() => setIsSearchBarFocused(true)}
           onBlur={() => setIsSearchBarFocused(false)}
-          // data-tooltip-id="tooltip"
-          // data-tooltip-html={"<div>focus :  <span class='tooltip-btn'>/</span></div><div>unfocus :  <span class='tooltip-btn'>Esc</span></div>"}
         />
         <div className={styles.inputShortcut}>
           {!isSearchBarFocused ? (
@@ -155,36 +156,36 @@ const Collections = ({ categoryType }: any) => {
           )}
         </div>
       </div>
+
       {searchQuery?.length > 2 ? (
         <h1>
-          showing collections for{" "}
-          <span className={styles.serachQuery}>{searchQuery}</span>
+          Showing collections for{" "}
+          <span className={styles.searchQuery}>{searchQuery}</span>
         </h1>
       ) : (
         <h1>
-          All Collections <span className={styles.serachQuery}></span>
+          All Collections <span className={styles.searchQuery}></span>
         </h1>
       )}
+
       <div className={styles.movieList}>
         {data.map((ele: any) => {
-          return <MovieCardSmall data={ele} media_type={"collection"} />;
+          return <MovieCardSmall key={ele.id} data={ele} media_type={"collection"} />;
         })}
         {searchQuery?.length > 2 && data?.length === 0 ? (
           <h1>No Data Found</h1>
         ) : null}
         {(searchQuery === null || searchQuery === "") &&
           data?.length === 0 &&
-          dummyList.map((ele) => <Skeleton className={styles.loading} />)}
-        {/* {data?.total_results === 0 &&
-          <h1>No Data Found</h1>} */}
+          dummyList.map((ele) => <Skeleton key={ele} className={styles.loading} />)}
       </div>
+
       <ReactPaginate
         containerClassName={styles.pagination}
         pageClassName={styles.page_item}
         activeClassName={styles.paginateActive}
         onPageChange={(event) => {
           setCurrentPage(event.selected + 1);
-          console.log({ event });
           if (currentPage > totalpages) {
             setCurrentPage(totalpages);
           }
