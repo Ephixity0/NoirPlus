@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "@/styles/Settings.module.scss";
 import Link from "next/link";
-import { signupUser Manual } from "@/Utils/firebaseUser ";
+import { signupUserManual } from "@/Utils/firebaseUser"; // Fixed import
 import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
@@ -12,7 +12,7 @@ const SignupPage = () => {
 
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (await signupUser Manual({ username, email, password })) {
+    if (await signupUserManual({ username, email, password })) { // Fixed function name
       push("/settings");
     }
   };
@@ -21,10 +21,10 @@ const SignupPage = () => {
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img
-          src="/images/63d168593f214df1ae64b04babe19c89-free.png" // Updated logo image
-          alt="Noir+ Logo" // Updated alt text
+          src="/images/63d168593f214df1ae64b04babe19c89-free.png"
+          alt="Noir+ Logo"
         />
-        <p>Noir+</p> {/* Updated text */}
+        <p>Noir+</p>
       </div>
       <div className={styles.settings}>
         <h1>Signup</h1>
@@ -54,7 +54,7 @@ const SignupPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <button type="submit">Submit</button> {/* Changed to type="submit" */}
+            <button type="submit">Submit</button>
           </form>
         </div>
         <h4>
