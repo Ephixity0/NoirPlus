@@ -90,7 +90,7 @@ const ErrorPage = () => {
             <h3>{result}</h3>
           </div>
         )}
-        <div className={styles.scoreboard}> {/* Fixed line 92 */}
+        <div className={styles.scoreboard}>
           <p>User Score: {userScore}</p>
           <p>Computer Score: {computerScore}</p>
         </div>
