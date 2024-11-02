@@ -1,55 +1,72 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "@/styles/Settings.module.scss";
+import Link from "next/link";
+import { loginUser Google, loginUser Manual } from "@/Utils/firebaseUser ";
+import { useRouter } from "next/navigation";
+
 const LoginPage = () => {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>();
-  useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    });
-  }, []);
-  const handleDownload = async () => {
-    if (deferredPrompt !== null && deferredPrompt !== undefined) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") {
-        setDeferredPrompt(null);
-      }
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { push } = useRouter();
+
+  const handleFormSubmission = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (await loginUser Manual({ email, password })) {
+      push("/settings");
     }
   };
+
+  const handleGoogleSignIn = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (await loginUser Google()) {
+      push("/settings");
+    }
+  };
+
   return (
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img
-          src="/images/logo.svg"
-          alt="logo"
+          src="/images/63d168593f214df1ae64b04babe19c89-free.png"
+          alt="Noir+ Logo"
           data-tooltip-id="tooltip"
-          data-tooltip-content="Rive"
+          data-tooltip-content="Noir+"
         />
         <p>Your Personal Streaming Oasis</p>
       </div>
       <div className={styles.settings}>
-        <h1>Downloads</h1>
+        <h1>Login</h1>
         <div className={styles.group2}>
-          <h1>PWA</h1>
-          <p>
-            This will install app for all device with very low space and data
-          </p>
-          <p>
-            Download using Brave Browser or Chrome if you have ad-blocker on the
-            chrome account, for ad-free experience
-          </p>
-          <p>If not downloading, refresh this page and try again</p>
-          {/* <p>To download movies/tv shows, go to it's watch page, and use extensions like FetchV</p> */}
-          <h4
-            className={styles.downloadButton}
-            onClick={handleDownload}
-            data-tooltip-id="tooltip"
-            data-tooltip-content="Download PWA"
-          >
-            Download
-          </h4>
+          <>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button onClick={handleFormSubmission}>Submit</button>
+          </>
         </div>
+        <h4 className={styles.signin} onClick={handleGoogleSignIn}>
+          Sign in with <span className={styles.highlight}>Google</span>
+        </h4>
+        <h4>
+          Become a Noir+ member!{" "}
+          <Link href="/signup" className={styles.highlight}>
+            Signup
+          </Link>
+        </h4>
+        {/* <h4 onClick={() => resetPassword(email)} className={styles.highlight}>Forgot Password?</h4> */}
       </div>
     </div>
   );
