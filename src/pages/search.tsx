@@ -6,22 +6,37 @@ import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 import MovieCardLarge from "@/components/MovieCardLarge";
 import Skeleton from "react-loading-skeleton";
 import NProgress from "nprogress";
-// import MoviePoster from '@/components/MoviePoster';
 
-const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const SearchPage = ({ categoryType }: any) => {
+const dummyList = Array.from({ length: 10 }, (_, i) => i + 1); // Creates an array [1, 2, ..., 10]
+
+interface Genre {
+  id: number;
+  name: string;
+}
+
+interface MovieData {
+  results: any[];
+  total_pages: number;
+  page: number;
+}
+
+interface SearchPageProps {
+  categoryType: string;
+}
+
+const SearchPage = ({ categoryType }: SearchPageProps) => {
   const [query, setQuery] = useState("");
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalpages, setTotalpages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [genreListMovie, setGenreListMovie] = useState<any>([]);
-  const [genreListTv, setGenreListTv] = useState<any>([]);
+  const [genreListMovie, setGenreListMovie] = useState<Genre[]>([]);
+  const [genreListTv, setGenreListTv] = useState<Genre[]>([]);
   const [isSearchBarFocused, setIsSearchBarFocused] = useState(false);
-  const searchBar: any = useRef(null);
+  const searchBar = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGenres = async () => {
       try {
         const gM = await axiosFetch({ requestID: "genresMovie" });
         const gT = await axiosFetch({ requestID: "genresTv" });
@@ -31,75 +46,79 @@ const SearchPage = ({ categoryType }: any) => {
         console.error("Error fetching genres:", error);
       }
     };
-    fetchData();
-    searchBar?.current.focus();
 
-    // focus the input on "/"
-    const handleKeyDown = (event: any) => {
+    fetchGenres();
+    searchBar.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "/") {
         event.preventDefault();
-        searchBar?.current.focus();
+        searchBar.current?.focus();
       } else if (event.key === "Escape") {
         event.preventDefault();
-        searchBar?.current.blur();
-        // setSearchQuery((prev: any) => prev + "/");
+        searchBar.current?.blur();
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
   useEffect(() => {
-    let debounceTimer: NodeJS.Timeout;
-    const fetchData = async (mode: any) => {
-      setLoading(true);
-      // setData([null, null, null, null, null, null, null, null, null, null]);
-      try {
-        let data;
-        if (mode) {
-          data = await axiosFetch({
-            requestID: `searchMulti`,
-            page: currentPage,
-            query: query,
-          });
-          // console.log();
-          if (data.page > data.total_pages) {
-            setCurrentPage(data.total_pages);
-          }
-          if (currentPage > data.total_pages) {
+    const debounceFetchData = (mode: boolean) => {
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          let data: MovieData;
+
+          if (mode) {
+            data = await axiosFetch({
+              requestID: "searchMulti",
+              page: currentPage,
+              query: query,
+            });
+
+            if (data.page > data.total_pages) {
+              setCurrentPage(data.total_pages);
+            }
+
+            setTotalPages(Math.min(data.total_pages, 500));
+          } else {
+            data = await axiosFetch({ requestID: "trending" });
             setCurrentPage(1);
-            return;
+            setTotalPages(1);
           }
-          setTotalpages(data.total_pages > 500 ? 500 : data.total_pages);
-        } else {
-          data = await axiosFetch({ requestID: `trending` });
-          setCurrentPage(1);
-          setTotalpages(1);
+
+          setData(data.results);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          setLoading(false);
         }
-        setData(data.results);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      };
+
+      if (query.length >= 3) {
+        fetchData();
+      } else if (query.length === 0) {
+        fetchData();
       }
     };
-    const debounceSearch = () => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        if (query.length >= 3) {
-          fetchData(true);
-        }
-      }, 600);
-    };
-    if (query?.length > 2) debounceSearch();
-    if (query?.length === 0) fetchData(false);
+
+    const debounceTimer = setTimeout(() => {
+      debounceFetchData(query.length > 2);
+    }, 600);
+
     return () => clearTimeout(debounceTimer);
   }, [query, currentPage]);
 
   useEffect(() => {
     if (loading) {
       NProgress.start();
-    } else NProgress.done(false);
+    } else {
+      NProgress.done();
+    }
   }, [loading]);
 
   useEffect(() => {
@@ -108,7 +127,7 @@ const SearchPage = ({ categoryType }: any) => {
 
   return (
     <div className={styles.MoviePage}>
-      {/* <h1>Search</h1> */}
+      <img src="/images/63d168593f214df1ae64b04babe19c89-free.png" alt="Noir+ Logo" className ={styles.logoImage} />
       <div className={styles.InputWrapper}>
         <input
           ref={searchBar}
@@ -119,8 +138,6 @@ const SearchPage = ({ categoryType }: any) => {
           placeholder="Please enter at least 3 characters to search..."
           onFocus={() => setIsSearchBarFocused(true)}
           onBlur={() => setIsSearchBarFocused(false)}
-          // data-tooltip-id="tooltip"
-          // data-tooltip-html={"<div>focus :  <span class='tooltip-btn'>/</span></div><div>unfocus :  <span class='tooltip-btn'>Esc</span></div>"}
         />
         <div className={styles.inputShortcut}>
           {!isSearchBarFocused ? (
@@ -132,7 +149,7 @@ const SearchPage = ({ categoryType }: any) => {
       </div>
       {query.length > 2 ? (
         <h1>
-          showing result for <span className={styles.serachQuery}>{query}</span>
+          Showing results for <span className={styles.serachQuery}>{query}</span>
         </h1>
       ) : (
         <h1>
@@ -140,34 +157,30 @@ const SearchPage = ({ categoryType }: any) => {
         </h1>
       )}
       <div className={styles.movieList}>
-        {genreListMovie?.length > 0 &&
-          genreListTv?.length > 0 &&
-          data.map((ele: any) => {
-            return (
-              <MovieCardLarge
-                data={ele}
-                media_type={categoryType}
-                genresMovie={genreListMovie}
-                genresTv={genreListTv}
-              />
-            );
-          })}
-        {query.length > 2 && data?.length === 0 ? <h1>No Data Found</h1> : null}
-        {query.length > 2 && data === undefined
-          ? dummyList.map((ele) => <Skeleton className={styles.loading} />)
-          : null}
-        {genreListMovie?.length === 0 || genreListTv?.length === 0
-          ? dummyList.map((ele: any) => {
-              return (
-                <MovieCardLarge
-                  data={ele}
-                  media_type={categoryType}
-                  genresMovie={genreListMovie}
-                  genresTv={genreListTv}
-                />
-              );
-            })
-          : null}
+        {genreListMovie.length > 0 && genreListTv.length > 0 && data.map((ele) => (
+          <MovieCardLarge
+            data={ele}
+            media_type={categoryType}
+            genresMovie={genreListMovie}
+            genresTv={genreListTv}
+          />
+        ))}
+        {query.length > 2 && data.length === 0 ? (
+          <h1>No Data Found</h1>
+        ) : null}
+        {query.length > 2 && data === undefined ? (
+          dummyList.map((ele) => <Skeleton className={styles.loading} />)
+        ) : null}
+        {genreListMovie.length === 0 || genreListTv.length === 0 ? (
+          dummyList.map((ele) => (
+            <MovieCardLarge
+              data={ele}
+              media_type={categoryType}
+              genresMovie={genreListMovie}
+              genresTv={genreListTv}
+            />
+          ))
+        ) : null}
       </div>
       <ReactPaginate
         containerClassName={styles.pagination}
@@ -176,18 +189,17 @@ const SearchPage = ({ categoryType }: any) => {
         onPageChange={(event) => {
           setCurrentPage(event.selected + 1);
           console.log({ event });
-          if (currentPage > totalpages) {
-            setCurrentPage(totalpages);
+          if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
           }
           window.scrollTo(0, 0);
         }}
         forcePage={currentPage - 1}
-        pageCount={totalpages}
+        pageCount={totalPages}
         breakLabel=" ... "
         previousLabel={<AiFillLeftCircle className={styles.paginationIcons} />}
         nextLabel={<AiFillRightCircle className={styles.paginationIcons} />}
       />
-      ;
     </div>
   );
 };
